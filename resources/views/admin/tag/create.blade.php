@@ -1,24 +1,27 @@
 @extends('admin.app')
 
 @section('main-section')
-    <!-- Start app main Content -->
-        <div class="main-content">
-            <section class="section">
-                <div class="section-header">
-                    <h1>Add Tag</h1>
-                    <div class="section-header-breadcrumb">
-                        <div class="breadcrumb-item active"><a href="#">tags</a></div>
-                        <div class="breadcrumb-item"><a href="#">create</a></div>
-                    </div>
+    <div class="main-content">
+        <section class="section">
+            <div class="section-header">
+                <h1>Add Tag</h1>
+                <div class="section-header-breadcrumb">
+                    <div class="breadcrumb-item active"><a href="#">tags</a></div>
+                    <div class="breadcrumb-item active"><a href={{ route('tags.index') }}>list</a></div>
+                    <div class="breadcrumb-item"><a href="#">add</a></div>
                 </div>
+            </div>
 
-                <div class="section-body">
-                    <div class="row">
-                        <div class="col-12">
+            <div class="section-body">
+                <div class="row">
+                    <div class="col-12">
+                        {!! Form::open(['route' => 'tags.store']) !!}
+                            @csrf
                             @include('admin.tag.form')
-                        </div>
+                        {!! Form::close() !!}
                     </div>
                 </div>
-            </section>
-        </div>
+            </div>
+        </section>
+    </div>
 @endsection

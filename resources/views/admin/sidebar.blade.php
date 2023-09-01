@@ -8,7 +8,7 @@
                 <a href="index-2.html">CP</a>
             </div>
             <ul class="sidebar-menu">
-                <li class="{{ Route::currentRouteName() === 'tags.index' ? 'bg-warning' : '' }}"><a class="nav-link" href={{ route('tags.index'); }}> <span>Tags</span></a></li>
+                <li class="{{ str_contains(Route::currentRouteName(), 'tags') ? 'bg-warning' : '' }}"><a class="nav-link" href={{ route('tags.index'); }}> <span>Tags</span></a></li>
             </ul>
         </aside>
     </div>

@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use App\Models\Admin\Tag;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class TagController extends Controller
 {
@@ -12,7 +13,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        return view('admin.tag.list');
+        $data['tags'] = Tag::all();
+        return view('admin.tag.list', $data);
     }
 
     /**
@@ -28,7 +30,12 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $items = $request->all();
+        $items['slug'] = (new Tag)->createSlug($items['name']);
+        $items['created_by'] = 1;
+        Tag::create($items);
+        return redirect()->route('tags.create');
+
     }
 
     /**
@@ -36,7 +43,8 @@ class TagController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data['tag'] = Tag::find($id);
+        return view('admin.tag.view', $data);
     }
 
     /**
@@ -44,7 +52,8 @@ class TagController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $data['tag'] = Tag::find($id);
+        return view('admin.tag.edit', $data);
     }
 
     /**
@@ -52,7 +61,14 @@ class TagController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $items = $request->except(['_token', '_method']);
+
+        $items['slug'] = (new Tag)->createSlug($items['name']);
+        $items['status'] = 1;
+        Tag::where('id', $id)
+            ->update($items);
+
+        return redirect()->route('tags.index');
     }
 
     /**
@@ -60,6 +76,9 @@ class TagController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Tag::where('id', $id)
+            ->delete();
+        $data['tags'] = Tag::all();
+        return redirect()->route('tags.index');
     }
 }

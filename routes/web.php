@@ -28,11 +28,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('/tags', [TagController::class, 'index'])->name('tags.index');
-    Route::get('/tags/create', [TagController::class, 'create'])->name('tags.create');
-    Route::post('/store', [TagController::class, 'store'])->name('tags.store');
-    Route::get('/edit/{id}', [TagController::class, 'edit'])->name('tags.edit');
-    Route::delete('/delete/{id}', [TagController::class, 'destroy'])->name('tags.delete');
+    Route::prefix('tags')->group(function () {
+        Route::get('/', [TagController::class, 'index'])->name('tags.index');
+        Route::get('/create', [TagController::class, 'create'])->name('tags.create');
+        Route::post('/store', [TagController::class, 'store'])->name('tags.store');
+        Route::get('/view/{id}', [TagController::class, 'show'])->name('tags.view');
+        Route::get('/edit/{id}', [TagController::class, 'edit'])->name('tags.edit');
+        Route::post('/update/{id}', [TagController::class, 'update'])->name('tags.update');
+        Route::delete('/delete/{id}', [TagController::class, 'destroy'])->name('tags.delete');
+    });
 
 });
 
