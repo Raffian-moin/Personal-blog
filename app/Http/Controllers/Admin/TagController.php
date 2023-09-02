@@ -4,7 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin\Tag;
 use Illuminate\Http\Request;
+use App\Http\Requests\TagRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
 {
@@ -28,13 +31,20 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TagRequest $request): RedirectResponse
     {
-        $items = $request->all();
-        $items['slug'] = (new Tag)->createSlug($items['name']);
-        $items['created_by'] = 1;
-        Tag::create($items);
-        return redirect()->route('tags.create');
+        try {
+            $items = $request->all();
+            $items['slug'] = (new Tag)->createSlug($items['name']);
+            $items['created_by'] = 1;
+            Tag::create($items);
+            return redirect()->route('tags.create');
+
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withErrors($e->getMessage())
+                ->withInput($request->all);
+        }
 
     }
 
@@ -59,7 +69,7 @@ class TagController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TagRequest $request, string $id)
     {
         $items = $request->except(['_token', '_method']);
 

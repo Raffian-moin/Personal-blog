@@ -2,6 +2,15 @@
 
 @section('main-section')
     <div class="main-content">
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <section class="section">
             <div class="section-header">
                 <h1>Add Tag</h1>
