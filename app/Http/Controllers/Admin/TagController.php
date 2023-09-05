@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin\Tag;
-use Illuminate\Http\Request;
 use App\Http\Requests\TagRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Validator;
 
 class TagController extends Controller
 {
@@ -35,10 +33,8 @@ class TagController extends Controller
     {
         try {
             $items = $request->all();
-            $items['slug'] = (new Tag)->createSlug($items['name']);
-            $items['created_by'] = 1;
             Tag::create($items);
-            return redirect()->route('tags.create');
+            return redirect()->route('tags.create')->with('success', 'tag saved successfully!');
 
         } catch (\Exception $e) {
             return redirect()->back()
@@ -73,8 +69,6 @@ class TagController extends Controller
     {
         $items = $request->except(['_token', '_method']);
 
-        $items['slug'] = (new Tag)->createSlug($items['name']);
-        $items['status'] = 1;
         Tag::where('id', $id)
             ->update($items);
 
@@ -89,6 +83,6 @@ class TagController extends Controller
         Tag::where('id', $id)
             ->delete();
         $data['tags'] = Tag::all();
-        return redirect()->route('tags.index');
+        return redirect()->route('tags.index')->with('success', 'tag deleted successfully!');
     }
 }

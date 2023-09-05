@@ -19,7 +19,7 @@ class TagRequest extends FormRequest
     protected function prepareForValidation(): void
     {
 
-        $slug = (new Tag)->createSlug($this->name);
+        $slug = (new Tag)->createSlug($this->name, $this->route('id'));
         $this->merge([
             'slug' => $slug
         ]);
@@ -34,7 +34,7 @@ class TagRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'slug' => 'required|max:255',
+            'slug' => ['required', 'max:255', Rule::unique(Tag::class)->ignore($this->route('id'))],
         ];
     }
 }
