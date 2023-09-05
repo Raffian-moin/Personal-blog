@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Admin\TagController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::prefix('tags')->group(function () {
+        Route::get('/', [TagController::class, 'index'])->name('tags.index');
+        Route::get('/create', [TagController::class, 'create'])->name('tags.create');
+        Route::post('/store', [TagController::class, 'store'])->name('tags.store');
+        Route::get('/view/{id}', [TagController::class, 'show'])->name('tags.view');
+        Route::get('/edit/{id}', [TagController::class, 'edit'])->name('tags.edit');
+        Route::post('/update/{id}', [TagController::class, 'update'])->name('tags.update');
+        Route::delete('/delete/{id}', [TagController::class, 'destroy'])->name('tags.delete');
+    });
+
 });
 
 require __DIR__.'/auth.php';
