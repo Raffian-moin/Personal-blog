@@ -2,6 +2,15 @@
 
 @section('main-section')
     <div class="main-content">
+        @if (session('success'))
+           <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        @endif
+
         <section class="section">
             <div class="section-header">
                 <h1>Tag list</h1>
@@ -17,10 +26,17 @@
                         <div class="card">
                             <div class="row card-header">
                                 <div class="text-start">
-                                    <h4>Advanced Table</h4>
+                                    <p>
+                                    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                                        Search
+                                    </a>
+                                    </p>
                                 </div>
                                 <div class="text-end">
                                     <a href={{ route('tags.create') }} class="btn btn-primary">Add</a>
+                                </div>
+                                <div class="collapse" id="collapseExample">
+                                    <p>search form goes here</p>
                                 </div>
                             </div>
 
@@ -48,7 +64,7 @@
                                                     </div>
                                                 </td>
                                                 <td>{{ $tag->name }}</td>
-                                                <td>{{  $tag->created_at }}</td>
+                                                <td>{{ date_format($tag->created_at, "Y-m-d") }}</td>
                                                 <td ><div class="badge badge-{{ $tag->status ? 'success' : 'danger' }}">{{ $tag->status ? 'Active' : 'Inactive' }}</div></td>
                                                 <td>
                                                     <div class="dropdown d-inline mr-2">

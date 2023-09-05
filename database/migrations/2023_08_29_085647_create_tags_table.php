@@ -17,10 +17,12 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->boolean('status');
             $table->unsignedBigInteger('created_by');
+            $table->unsignedBigInteger('updated_by');
             $table->softDeletes('deleted_at');
             $table->timestamps();
 
             $table->foreign('created_by')->references('id')->on('users');
+            $table->foreign('updated_by')->references('id')->on('users');
         });
     }
 
