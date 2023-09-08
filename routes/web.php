@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,16 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [TagController::class, 'edit'])->name('tags.edit');
         Route::post('/update/{id}', [TagController::class, 'update'])->name('tags.update');
         Route::delete('/delete/{id}', [TagController::class, 'destroy'])->name('tags.delete');
+    });
+
+    Route::prefix('categories')->group(function () {
+        Route::get('/', [CategoryController::class, 'index'])->name('categories.index');
+        Route::get('/create', [CategoryController::class, 'create'])->name('categories.create');
+        Route::post('/store', [CategoryController::class, 'store'])->name('categories.store');
+        Route::get('/view/{id}', [CategoryController::class, 'show'])->name('categories.view');
+        Route::get('/edit/{id}', [CategoryController::class, 'edit'])->name('categories.edit');
+        Route::post('/update/{id}', [CategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
     });
 
 });

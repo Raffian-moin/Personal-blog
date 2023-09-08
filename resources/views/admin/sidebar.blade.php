@@ -9,6 +9,7 @@
             </div>
             <ul class="sidebar-menu">
                 <li class="{{ str_contains(Route::currentRouteName(), 'tags') ? 'bg-warning' : '' }}"><a class="nav-link" href={{ route('tags.index'); }}> <span>Tags</span></a></li>
+                <li class="{{ str_contains(Route::currentRouteName(), 'categories') ? 'bg-warning' : '' }}"><a class="nav-link" href={{ route('categories.index'); }}> <span>Categories</span></a></li>
             </ul>
         </aside>
     </div>

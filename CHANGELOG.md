@@ -6,3 +6,5 @@
 3. Common method for slug
 4. Bulk operation on list
 5. Login, logout, profile page change with admin dashboard design
+6. General settings
+7. Newsletter(good to have)
