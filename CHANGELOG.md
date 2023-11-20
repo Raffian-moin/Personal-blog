@@ -8,3 +8,9 @@
 5. Login, logout, profile page change with admin dashboard design
 6. General settings
 7. Newsletter(good to have)
+8. Post scope
+    1. Most viewed posts
+9. Social Media share
+
+#### Later implementation
+1. Roles and permission
