@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,18 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete/{id}', [CategoryController::class, 'destroy'])->name('categories.delete');
     });
 
+    Route::prefix('posts')->group(function () {
+        Route::get('/', [PostController::class, 'index'])->name('posts.index');
+        Route::get('/create', [PostController::class, 'create'])->name('posts.create');
+        Route::post('/store', [PostController::class, 'store'])->name('posts.store');
+        Route::get('/view/{id}', [PostController::class, 'show'])->name('posts.view');
+        Route::get('/edit/{id}', [PostController::class, 'edit'])->name('posts.edit');
+        Route::put('/update/{id}', [PostController::class, 'update'])->name('posts.update');
+        Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('posts.delete');
+    });
+
 });
+
+Route::post('/upload-image', [CategoryController::class, 'upload'])->name('upload.image');
 
 require __DIR__.'/auth.php';
