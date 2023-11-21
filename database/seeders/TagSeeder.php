@@ -2,9 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-
+use Illuminate\Support\Facades\DB;
 class TagSeeder extends Seeder
 {
     /**
@@ -12,6 +11,41 @@ class TagSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        DB::table('tags')->delete();
+
+        DB::table('tags')->insert(
+            [
+                [
+                    'name'       => 'PHP',
+                    'slug'       => 'php',
+                    'created_by' => 1,
+                    'updated_by' => 1,
+                ],
+                [
+                    'name'       => 'Laravel',
+                    'slug'       => 'laravel',
+                    'created_by' => 1,
+                    'updated_by' => 1,
+                ],
+                [
+                    'name'       => 'JavaScript',
+                    'slug'       => 'javascript',
+                    'created_by' => 1,
+                    'updated_by' => 1,
+                ],
+                [
+                    'name'       => 'Python',
+                    'slug'       => 'python',
+                    'created_by' => 1,
+                    'updated_by' => 1,
+                ],
+                [
+                    'name'       => 'Data Structure and Algorithm',
+                    'slug'       => 'data-structure-algorithm',
+                    'created_by' => 1,
+                    'updated_by' => 1,
+                ],
+            ]
+        );
     }
 }
