@@ -67,8 +67,7 @@ class CategoryController extends Controller
     {
         $items = $request->except(['_token', '_method']);
 
-        Category::where('id', $id)
-        ->update($items);
+        Category::where('id', $id)->update($items);
 
         return redirect()->route('categories.index');
     }
@@ -78,9 +77,8 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
-        Category::where('id', $id)
-        ->delete();
-        $data['categories'] = Category::all();
+        Category::where('id', $id)->delete();
+
         return redirect()->route('categories.index')->with('success', 'category deleted successfully!');
     }
 }

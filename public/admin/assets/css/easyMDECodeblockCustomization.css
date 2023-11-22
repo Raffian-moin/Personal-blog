@@ -1,0 +1,29 @@
+
+/* Add CSS style for copy button */
+.copy-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 2px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    z-index: 1;
+    /* Ensure the button stays above the code block */
+}
+
+/* Ensure proper positioning for the code block container */
+pre {
+    position: relative;
+    padding: 10px;
+    /* Adjust padding as needed */
+    border-radius: 5px;
+    /* Optional: Add border radius for rounded corners */
+    background-color: #f5f5f5;
+    /* Optional: Set background color */
+}
+
+pre span {
+    font-size: 15px;
+}
