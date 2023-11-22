@@ -1,5 +1,10 @@
 @extends('admin.app')
 
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('admin/assets/css/easyMDECodeblockCustomization.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/assets/css/postCoverImage.css') }}">
+@endpush
+
 @section('main-section')
     <div class="main-content">
         <section class="section">
@@ -97,5 +102,5 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset('admin/js/codeblockCopyButton.js') }}"></script>
+<script src="{{ asset('admin/js/codeblockCopyButton.js') }}"></script>
 @endpush
