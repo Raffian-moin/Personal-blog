@@ -3,11 +3,12 @@
 namespace App\Models\Admin;
 
 use App\Traits\Autofill;
+use App\Models\Admin\Post;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-
+use Illuminate\Database\Eloquent\Relations\HasMany;
 class Category extends Model
 {
     use SoftDeletes, HasFactory, Autofill;
@@ -28,6 +29,11 @@ class Category extends Model
             $id++;
         }
         return Str::slug($name, '-') . '-' . $id;
+    }
+
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
     }
 
     /**
