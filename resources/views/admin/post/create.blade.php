@@ -1,5 +1,11 @@
 @extends('admin.app')
 
+@push('stylesheet')
+<link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+<link rel="stylesheet" href="{{ asset('admin/assets/modules/select2/dist/css/select2.min.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/assets/css/postCoverImage.css') }}">
+@endpush
+
 @section('main-section')
     <div class="main-content">
         @if ($errors->any())

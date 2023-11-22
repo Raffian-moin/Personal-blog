@@ -53,7 +53,6 @@
             <div class="col-md-4">
                 <div class="form-group">
                     {{ Form::checkbox('is_published', 1) }}
-                    {{-- <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault"> --}}
                     <label class="form-check-label" for="flexCheckDefault">
                         Publish
                     </label>
@@ -61,19 +60,17 @@
             </div>
         </div>
 
-        {{-- <div class="form-check">
-        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-        <label class="form-check-label" for="flexCheckDefault">
-            Default checkbox
-        </label>
-        </div> --}}
-
         <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </div>
 
 @push('scripts')
+
+<script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
 <script src="{{ asset('admin/js/easymde.js') }}"></script>
+<script src="{{ asset('admin/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+<script src="{{ asset('admin/assets/modules/jquery-selectric/jquery.selectric.min.js') }}"></script>
+
 <script>
     const fileInput = document.getElementById('fileInput');
     const previewImage = document.getElementById('previewImage');
