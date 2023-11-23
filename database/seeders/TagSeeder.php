@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Admin\Tag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 class TagSeeder extends Seeder
@@ -13,39 +14,44 @@ class TagSeeder extends Seeder
     {
         DB::table('tags')->delete();
 
-        DB::table('tags')->insert(
+        $tags = [
             [
-                [
-                    'name'       => 'PHP',
-                    'slug'       => 'php',
-                    'created_by' => 1,
-                    'updated_by' => 1,
-                ],
-                [
-                    'name'       => 'Laravel',
-                    'slug'       => 'laravel',
-                    'created_by' => 1,
-                    'updated_by' => 1,
-                ],
-                [
-                    'name'       => 'JavaScript',
-                    'slug'       => 'javascript',
-                    'created_by' => 1,
-                    'updated_by' => 1,
-                ],
-                [
-                    'name'       => 'Python',
-                    'slug'       => 'python',
-                    'created_by' => 1,
-                    'updated_by' => 1,
-                ],
-                [
-                    'name'       => 'Data Structure and Algorithm',
-                    'slug'       => 'data-structure-algorithm',
-                    'created_by' => 1,
-                    'updated_by' => 1,
-                ],
-            ]
-        );
+                'name'       => 'PHP',
+                'slug'       => 'php',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ],
+            [
+                'name'       => 'Laravel',
+                'slug'       => 'laravel',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ],
+            [
+                'name'       => 'JavaScript',
+                'slug'       => 'javascript',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ],
+            [
+                'name'       => 'Python',
+                'slug'       => 'python',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ],
+            [
+                'name'       => 'Data Structure and Algorithm',
+                'slug'       => 'data-structure-algorithm',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ],
+        ];
+
+        DB::transaction(function () use ($tags) {
+            foreach ($tags as $tag) {
+                Tag::create($tag);
+            }
+        });
+        
     }
 }
