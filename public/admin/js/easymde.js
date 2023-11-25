@@ -1,4 +1,4 @@
-var token = "{{ csrf_token() }}";
+var csrfToken = document.querySelector('meta[name="csrf-token"]').content;
 const editor = new EasyMDE({
     element: document.getElementById("easy-mde-text-editor"),
     // autoDownloadFontAwesome: false
@@ -112,17 +112,17 @@ const editor = new EasyMDE({
     imageUploadFunction: function (file, onSuccess, onError) {
         var form_data = new FormData();
         var imageUrl;
-        form_data.append("file", file);
-        form_data.append("_token", token);
+        form_data.append("post_image", file);
+        form_data.append("_token", csrfToken);
         $.ajax({
-            url: "http://personal.blog.local/" + "upload-image",
+            url: "http://personal.blog.local/" + "posts/upload-post-image",
             data: form_data,
             dataType: "json",
             type: "POST",
             processData: false,
             contentType: false,
             success: function (response) {
-                imageUrl = response.location;
+                imageUrl = response.path;
             },
         }).then((url) => onSuccess(appendImageLink(imageUrl)));
     },
@@ -140,7 +140,7 @@ function appendImageLink(imageUrl) {
     const prefixNewline = lineIsEmpty ? "" : "\n";
     const postfixNewline = lineIsEmpty ? "" : "\n";
 
-    const imageMarkdown = `![](http://personal.blog.local${imageUrl})`;
+    const imageMarkdown = `![](http://personal.blog.local/${imageUrl})`;
     editor.codemirror.replaceSelection(
         `${prefixNewline}${imageMarkdown}${postfixNewline}`
     );
