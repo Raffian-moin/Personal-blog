@@ -3,7 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-
 class PostRequest extends FormRequest
 {
     /**
@@ -25,6 +24,7 @@ class PostRequest extends FormRequest
             'title'       => 'required|max:255',
             'body'        => 'required',
             'category_id' => 'required|integer',
+            'cover_image' => ['nullable', 'mimes:jpeg,jpg,jpe,png', 'between:1, 2024'],
         ];
     }
 }

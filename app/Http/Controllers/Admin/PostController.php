@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Admin\Tag;
 use App\Models\Admin\Post;
 use Illuminate\Http\Request;
+use App\Services\ImageUpload;
 use App\Models\Admin\Category;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\RedirectResponse;
-
-
 class PostController extends Controller
 {
     /**
@@ -36,15 +34,21 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PostRequest $request): RedirectResponse
+    public function store(PostRequest $request)
     {
         try {
-            $items = $request->all();
-            $items['slug'] = 'sffsff';
-            $items['is_published'] = $request->has('is_published') ?? 0;
-            $post = Post::create($items);
-            $post->tags()->sync($items['tags']);
-            return redirect()->route('posts.create')->with('success', 'Post saved successfully!');
+            return DB::transaction(function () use ($request) {
+                $items = $request->all();
+                $items['slug'] = time();
+                $items['is_published'] = $request->has('is_published') ?? 0;
+                if ($request->hasFile('cover_image')) {
+                    $uploadedFile = $request->file('cover_image');
+                    $items['cover_image'] = (new ImageUpload)->upload($uploadedFile, 'uploads/post/background-image');
+                }
+                $post = Post::create($items);
+                $post->tags()->sync($items['tags']);
+                return redirect()->route('posts.create')->with('success', 'Post saved successfully!');
+            });
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withErrors($e->getMessage())
@@ -80,17 +84,23 @@ class PostController extends Controller
     public function update(Request $request, int $id)
     {
         try {
-            DB::beginTransaction();
-            $items = $request->all();
-            $items['is_published'] = $request->has('is_published') ?? 0;
+            return DB::transaction(function () use ($request, $id) {
+                $items = $request->all();
+                $items['is_published'] = $request->has('is_published') ?? 0;
 
-            $post = Post::where('id', $id)->first();
+                $post = Post::where('id', $id)->first();
 
-            $post->update($items);
+                if ($request->hasFile('cover_image')) {
+                    $uploadedFile = $request->file('cover_image');
+                    $items['cover_image'] = (new ImageUpload)->update($uploadedFile, 'uploads/post/background-image', $post->cover_image);
+                }
 
-            $post->tags()->sync($items['tags']);
-            DB::commit();
-            return redirect()->route('posts.update')->with('success', 'Post saved successfully!');
+                $post->update($items);
+
+                $post->tags()->sync($items['tags']);
+
+                return redirect()->route('posts.index')->with('success', 'Post updated successfully!');
+            });
         } catch (\Exception $e) {
             return redirect()->back()
                 ->withErrors($e->getMessage())
@@ -104,9 +114,30 @@ class PostController extends Controller
     public function destroy(int $id)
     {
         $post = Post::find($id);
-        $post->tags()->detach();
-        $post->delete();
-        
+
+        DB::transaction(function () use ($post) {
+            $post->tags()->detach();
+            $post->delete();
+        });
+
+        // delete cover image only if post was deleted successfully
+        if (!empty($post->cover_image)) {
+            (new ImageUpload)->delete($post->cover_image);
+        }
+
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
+    }
+
+    public function uploadPostImage(Request $request)
+    {
+        try {
+            if ($request->hasFile('post_image')) {
+                $uploadedFile = $request->file('post_image');
+                $path = (new ImageUpload)->upload($uploadedFile, 'uploads/post/image');
+                return response()->json(['path' => $path]);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'No image uploaded.']);
+        }
     }
 }

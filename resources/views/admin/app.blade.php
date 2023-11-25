@@ -4,6 +4,7 @@
 <!--   Tue, 07 Jan 2020 03:33:27 GMT -->
 <head>
 <meta charset="UTF-8">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
 <title>Blog</title>
 
