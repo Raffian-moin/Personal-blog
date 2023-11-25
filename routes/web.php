@@ -58,10 +58,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/edit/{id}', [PostController::class, 'edit'])->name('posts.edit');
         Route::put('/update/{id}', [PostController::class, 'update'])->name('posts.update');
         Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('posts.delete');
+        Route::post('/upload-post-image', [PostController::class, 'uploadPostImage'])->name('upload.image');
     });
 
 });
-
-Route::post('/upload-image', [CategoryController::class, 'upload'])->name('upload.image');
-
 require __DIR__.'/auth.php';
