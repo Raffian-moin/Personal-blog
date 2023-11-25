@@ -38,7 +38,7 @@
             <div class="section-body">
                 <div class="row">
                     <div class="col-12">
-                        {!! Form::open(['route' => 'posts.store']) !!}
+                        {!! Form::open(['route' => 'posts.store', 'enctype' => "multipart/form-data"]) !!}
                             @csrf
                             @include('admin.post.form')
                         {!! Form::close() !!}
