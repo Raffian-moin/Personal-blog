@@ -69,8 +69,13 @@ class TagController extends Controller
     {
         $items = $request->except(['_token', '_method']);
 
-        Tag::where('id', $id)
-            ->update($items);
+        $tag = Tag::find($id);
+
+        $tag->name = $items['name'];
+
+        // laravel boot updating method don't trigger without save() method.
+        // we are updating slug on boot method. Hence updating like this.
+        $tag->save();
 
         return redirect()->route('tags.index');
     }

@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\Admin\Tag;
 use App\Models\Admin\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Services\ImageUpload;
 use App\Models\Admin\Category;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+
 class PostController extends Controller
 {
     /**
@@ -39,7 +41,7 @@ class PostController extends Controller
         try {
             return DB::transaction(function () use ($request) {
                 $items = $request->all();
-                $items['slug'] = time();
+                $items['slug'] = Str::slug($items['title'], '-') . '-' . time();
                 $items['is_published'] = $request->has('is_published') ?? 0;
                 if ($request->hasFile('cover_image')) {
                     $uploadedFile = $request->file('cover_image');
@@ -86,6 +88,7 @@ class PostController extends Controller
         try {
             return DB::transaction(function () use ($request, $id) {
                 $items = $request->all();
+                $items['slug'] = Str::slug($items['title'], '-') . '-' . time();
                 $items['is_published'] = $request->has('is_published') ?? 0;
 
                 $post = Post::where('id', $id)->first();

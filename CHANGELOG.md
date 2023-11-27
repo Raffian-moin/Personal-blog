@@ -1,16 +1,28 @@
 # Blog changelog
 
 #### Todos
-1. Search on list
-2. Pagination on list
-3. Common method for slug
-4. Bulk operation on list
-5. Login, logout, profile page change with admin dashboard design
-6. General settings
-7. Newsletter(good to have)
-8. Post scope
-    1. Most viewed posts
-9. Social Media share
+# Search on list
+# Pagination on list
+# Common method for slug
+# Bulk operation on list
+# Login, logout, profile page change with admin dashboard design
+# General settings
+# Newsletter(good to have)
+# Post scope
+    # Most viewed posts
+# Social Media share
+# Remove alert form copy button of codeblocks
+# Make image responsive in view (css)
+
 
 #### Later implementation
 1. Roles and permission
+
+
+# Issues
+1. We are storing the absolute path (raffian-moin/assets/image/xyz.png) of the image. What happens when we change the domain name?
+
+### Completed Tasks
+# Image uploads
+# Show cover image in edit mode
+# Common method for slug

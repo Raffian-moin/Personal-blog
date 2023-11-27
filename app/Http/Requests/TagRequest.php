@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Models\Admin\Tag;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
-
 class TagRequest extends FormRequest
 {
     /**
@@ -14,15 +11,6 @@ class TagRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    protected function prepareForValidation(): void
-    {
-
-        $slug = (new Tag)->createSlug($this->name, $this->route('id'));
-        $this->merge([
-            'slug' => $slug
-        ]);
     }
 
     /**
@@ -34,7 +22,6 @@ class TagRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'slug' => ['required', 'max:255', Rule::unique(Tag::class)->ignore($this->route('id'))],
         ];
     }
 }

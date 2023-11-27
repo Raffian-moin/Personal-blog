@@ -2,10 +2,9 @@
 
 namespace App\Models\Admin;
 
+use App\Traits\Slug;
 use App\Traits\Autofill;
-use App\Models\Admin\Tag;
 use App\Models\Admin\Post;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -13,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
-    use SoftDeletes, HasFactory, Autofill;
+    use SoftDeletes, HasFactory, Autofill, Slug;
 
     protected $fillable = [
         'name',
@@ -22,15 +21,6 @@ class Tag extends Model
         'created_by',
         'updated_by'
     ];
-
-    public function createSlug($name, $id) {
-
-        if (is_null($id)) {
-            $id = Tag::latest('id')->first()->id ?? 0;
-            $id++;
-        }
-        return Str::slug($name, '-') . '-'. $id;
-    }
 
     public function posts(): BelongsToMany
     {

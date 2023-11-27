@@ -2,16 +2,17 @@
 
 namespace App\Models\Admin;
 
+use App\Traits\Slug;
 use App\Traits\Autofill;
 use App\Models\Admin\Post;
-use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Category extends Model
 {
-    use SoftDeletes, HasFactory, Autofill;
+    use SoftDeletes, HasFactory, Autofill, Slug;
 
     protected $fillable = [
         'name',
@@ -20,16 +21,6 @@ class Category extends Model
         'created_by',
         'updated_by'
     ];
-
-    public function createSlug($name, $id)
-    {
-
-        if (is_null($id)) {
-            $id = Category::latest('id')->first()->id ?? 0;
-            $id++;
-        }
-        return Str::slug($name, '-') . '-' . $id;
-    }
 
     public function posts(): HasMany
     {
