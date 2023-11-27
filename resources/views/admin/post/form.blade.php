@@ -36,7 +36,7 @@
                         <input name="cover_image" type="file" class="custom-file-input" id="fileInput">
                         <label class="custom-file-label" for="fileInput">Choose file</label>
                     </div>
-                    <img id="previewImage" src="{{ isset($post) ? $post->cover_image : '#' }}" alt="Preview Image" style="display: none;">
+                    <img id="previewImage" src="{{ isset($post) ? asset($post->cover_image) : '#' }}" alt="Preview Image" style="display: {{ isset($post) ? 'block' : 'none' }};">
                 </div>
             </div>
         </div>

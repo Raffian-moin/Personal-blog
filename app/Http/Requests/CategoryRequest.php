@@ -3,9 +3,6 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Models\Admin\Category;
-use Illuminate\Validation\Rule;
-
 class CategoryRequest extends FormRequest
 {
     /**
@@ -14,15 +11,6 @@ class CategoryRequest extends FormRequest
     public function authorize(): bool
     {
         return true;
-    }
-
-    protected function prepareForValidation(): void
-    {
-
-        $slug = (new Category)->createSlug($this->name, $this->route('id'));
-        $this->merge([
-            'slug' => $slug
-        ]);
     }
 
     /**
@@ -34,7 +22,6 @@ class CategoryRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'slug' => ['required', 'max:255', Rule::unique(Category::class)->ignore($this->route('id'))],
         ];
     }
 }

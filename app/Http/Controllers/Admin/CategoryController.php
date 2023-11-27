@@ -67,7 +67,13 @@ class CategoryController extends Controller
     {
         $items = $request->except(['_token', '_method']);
 
-        Category::where('id', $id)->update($items);
+        $category = Category::find($id);
+
+        $category->name = $items['name'];
+
+        // laravel boot updating method don't trigger without save() method.
+        // we are updating slug on boot method. Hence updating like this.
+        $category->save();
 
         return redirect()->route('categories.index');
     }
