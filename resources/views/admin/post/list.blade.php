@@ -111,7 +111,11 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    {{ $posts->onEachSide(1)->links() }}
+                </div>
             </div>
+
         </section>
     </div>
 @endsection
