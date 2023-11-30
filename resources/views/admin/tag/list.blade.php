@@ -93,6 +93,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    {{ $tags->links() }}
+                </div>
             </div>
         </section>
     </div>

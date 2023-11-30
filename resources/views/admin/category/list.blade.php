@@ -93,6 +93,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="d-flex justify-content-center">
+                    {{ $categories->onEachSide(1)->links() }}
+                </div>
             </div>
         </section>
     </div>
