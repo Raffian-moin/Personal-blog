@@ -58,12 +58,13 @@
                                                     <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all">
                                                     <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                                                 </div>
+
                                             </th>
                                             <th>Title</th>
                                             <th>Category</th>
                                             <th>Tags</th>
                                             <th>Created at</th>
-                                            <th>Publish</th>
+                                            <th>Published?</th>
                                             <th>Action</th>
                                         </tr>
                                         @foreach ($posts as $post)
@@ -83,7 +84,12 @@
                                                     @endforeach
                                                 </td>
                                                 <td>{{ date_format($post->created_at, "Y-m-d") }}</td>
-                                                <td ><div class="badge badge-{{ $post->is_published ? 'success' : 'danger' }}">{{ $post->is_published ? 'Yes' : 'No' }}</div></td>
+                                                <td >
+                                                    <label class="custom-switch">
+                                                        <input type="checkbox" id={{ $post->id }} onclick="updatePublish(this)" name="option-{{ $post->id }}" value={{ $post->is_published }} class="custom-switch-input publish-toggle-button" {{ $post->is_published ? 'checked' : '' }}>
+                                                        <span class="custom-switch-indicator"></span>
+                                                    </label>
+                                                </td>
                                                 <td>
                                                     <div class="dropdown d-inline mr-2">
                                                         <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -119,3 +125,39 @@
         </section>
     </div>
 @endsection
+
+@push('scripts')
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    function updatePublish(currentElement)
+    {
+        $(document).ready(function(){
+        var form_data = new FormData();
+        form_data.append("is_published", Number(currentElement.value) === 1 ? 0 : 1);
+        form_data.append("_method", 'PATCH');
+
+            $.ajax({
+                url: "http://personal.blog.local/" + "posts/update-publish/"+ currentElement.id,
+                data: form_data,
+                dataType: "json",
+                type: "POST",
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    document.getElementById(currentElement.id).setAttribute('value', response.is_published);
+                },
+                error: function(xhr, textStatus, errorThrown){
+                    document.getElementById(currentElement.id).checked = Number(currentElement.value) === 1 ? true : false;
+                    alert(`Couldn't update publish`);
+                }
+            });
+        });
+    }
+</script>
+@endpush
+
