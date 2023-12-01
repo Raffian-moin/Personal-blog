@@ -10,6 +10,7 @@
     - Most viewed posts
 - Social Media share
 - Make image responsive in view (css)
+- Add publish toggle in post list
 
 
 ### Later implementation
@@ -25,4 +26,5 @@
 - Common method for slug
 - Remove alert form copy button of codeblocks
 - Pagination on list
+- Publish toggle button in posts list
 

@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/update/{id}', [PostController::class, 'update'])->name('posts.update');
         Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('posts.delete');
         Route::post('/upload-post-image', [PostController::class, 'uploadPostImage'])->name('upload.image');
+        Route::patch('/update-publish/{id}', [PostController::class, 'updatePublish'])->name('posts.publish');
     });
 
 });

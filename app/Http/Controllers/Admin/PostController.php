@@ -143,4 +143,23 @@ class PostController extends Controller
             return response()->json(['error' => 'No image uploaded.']);
         }
     }
+
+    public function updatePublish(Request $request, int $id)
+    {
+        try {
+            return DB::transaction(function () use ($request, $id) {
+                $items['is_published'] = $request->is_published;
+
+                $post = Post::where('id', $id)->first();
+
+                $post->update($items);
+
+                return $post;
+            });
+        } catch (\Exception $e) {
+            return redirect()->back()
+                ->withErrors($e->getMessage())
+                ->withInput($request->all);
+        }
+    }
 }
