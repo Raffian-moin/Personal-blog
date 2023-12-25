@@ -11,6 +11,7 @@
                 <li class="{{ str_contains(Route::currentRouteName(), 'tags') ? 'bg-warning' : '' }}"><a class="nav-link" href={{ route('tags.index'); }}> <span>Tags</span></a></li>
                 <li class="{{ str_contains(Route::currentRouteName(), 'categories') ? 'bg-warning' : '' }}"><a class="nav-link" href={{ route('categories.index'); }}> <span>Categories</span></a></li>
                 <li class="{{ str_contains(Route::currentRouteName(), 'posts') ? 'bg-warning' : '' }}"><a class="nav-link" href={{ route('posts.index'); }}> <span>Posts</span></a></li>
+                <li class="{{ str_contains(Route::currentRouteName(), 'settings') ? 'bg-warning' : '' }}"><a class="nav-link" href={{ route('settings.create'); }}> <span>Settings</span></a></li>
             </ul>
         </aside>
     </div>

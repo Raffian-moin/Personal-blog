@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\TagController;
-use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -60,6 +61,11 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete/{id}', [PostController::class, 'destroy'])->name('posts.delete');
         Route::post('/upload-post-image', [PostController::class, 'uploadPostImage'])->name('upload.image');
         Route::patch('/update-publish/{id}', [PostController::class, 'updatePublish'])->name('posts.publish');
+    });
+
+    Route::prefix('settings')->group(function () {
+        Route::get('/create', [SettingController::class, 'create'])->name('settings.create');
+        Route::post('/store', [SettingController::class, 'store'])->name('settings.store');
     });
 
 });
