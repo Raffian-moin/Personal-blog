@@ -28,6 +28,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/post-details', [HomeController::class, 'postDetails'])->name('post.details');
 Route::get('/categories/{slug}', [HomeController::class, 'index'])->name('categories.slug');
 Route::get('/{key}', [HomeController::class, 'getPostsByKey'])->name('posts.key');
 

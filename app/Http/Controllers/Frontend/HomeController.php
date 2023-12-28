@@ -16,7 +16,7 @@ class HomeController extends Controller
     {
         $data['categories'] = Category::all();
         $data['posts'] = Post::all();
-        return view("frontend.app", $data);
+        return view("frontend.home.home", $data);
     }
 
     /**
@@ -79,5 +79,10 @@ class HomeController extends Controller
         $data['posts'] = Post::orderBy($orderByColumn, 'desc')->get();
 
         return view("frontend.app", $data);
+    }
+
+    public function postDetails()
+    {
+        return view("frontend.post.post_details");
     }
 }
