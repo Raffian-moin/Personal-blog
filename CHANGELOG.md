@@ -4,13 +4,13 @@
 - Search on list
 - Bulk operation on list
 - Login, logout, profile page change with admin dashboard design
-- General settings
+
 - Newsletter(good to have)
 - Post scope
     - Most viewed posts
 - Social Media share
 - Make image responsive in view (css)
-- Add publish toggle in post list
+- General Settings for files
 
 
 ### Later implementation
@@ -27,4 +27,6 @@
 - Remove alert form copy button of codeblocks
 - Pagination on list
 - Publish toggle button in posts list
+- General settings
+- Make frontend dynamic
 

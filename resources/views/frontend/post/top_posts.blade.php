@@ -1,12 +1,8 @@
-<div class="pb-3">
-    <a href="./pages/post-details.html" class="post_card">
-        <p>GTA 6 — everything we know so far</p>
-        <span>06 November 2023</span>
-    </a>
-</div>
-<div>
-    <a href="./pages/post-details.html" class="post_card">
-        <p>GTA 6 — everything we know so far</p>
-        <span>06 November 2023</span>
-    </a>
-</div>
+@foreach ($top_posts as $top_post)
+    <div>
+        <a href="{{ route('post.details', $top_post->slug) }}" class="post_card">
+            <p>{{ $top_post->title }}</p>
+            {{-- <span>06 November 2023</span> --}}
+        </a>
+    </div>
+@endforeach

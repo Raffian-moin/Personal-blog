@@ -78,11 +78,27 @@ class HomeController extends Controller
 
         $data['posts'] = Post::orderBy($orderByColumn, 'desc')->get();
 
-        return view("frontend.app", $data);
+        return view("frontend.home.home", $data);
     }
 
-    public function postDetails()
+    public function postDetails($slug)
     {
-        return view("frontend.post.post_details");
+        $data['post'] = Post::where('slug', $slug)
+                            ->with('tags')
+                            ->with('category')
+                            ->first();
+        $data['related_posts'] = Post::where('category_id', $data['post']->category_id)
+                                    ->where('id', '!=', $data['post']->id)
+                                    ->get();
+        $data['recent_posts'] = Post::where('id', '!=', $data['post']->id)
+                                    ->orderBy('created_at', 'desc')
+                                    ->take(5)
+                                    ->get();
+        $data['top_posts'] = Post::where('id', '!=', $data['post']->id)
+                                    ->orderBy('total_views', 'desc')
+                                    ->take(5)
+                                    ->get();
+
+        return view("frontend.post.post_details", $data);
     }
 }
