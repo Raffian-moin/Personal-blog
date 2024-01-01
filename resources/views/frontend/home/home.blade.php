@@ -21,13 +21,13 @@
                 </div>
 
                 @foreach($posts as $post)
-                <div class="col-12 col-sm-6 col-lg-4 col-xxl-3">
-                    <a href="./pages/post-details.html" class="post_card">
-                        <img src="https://roar.media/wp-content/uploads/2023/11/9-1536x803.jpg" alt="">
-                        <p>{{ $post->title }}</p>
-                        <span>{{ $post->created_at }}</span>
-                    </a>
-                </div>
+                    <div class="col-12 col-sm-6 col-lg-4 col-xxl-3">
+                        <a href="{{ route('post.details', $post->slug) }}" class="post_card">
+                            <img src="https://roar.media/wp-content/uploads/2023/11/9-1536x803.jpg" alt="">
+                            <p>{{ $post->title }}</p>
+                            <span>{{ date_format($post->created_at, "j F Y")  }}</span>
+                        </a>
+                    </div>
                 @endforeach
 
             </div>
