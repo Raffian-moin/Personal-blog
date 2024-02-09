@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Admin\CategoryController;
-use Illuminate\Http\Request;
 
 
 /*
@@ -21,18 +20,22 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+require __DIR__.'/auth.php';
 
-Route::get('/dashboard', function () {
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('tags', [HomeController::class, 'getTags'])->name('tags');
+Route::get('posts/{slug}', [HomeController::class, 'postDetails'])->name('post.details');
+Route::get('categories/{slug}', [HomeController::class, 'getPostsByCategory'])->name('categories.slug');
+Route::get('{key}', [HomeController::class, 'getPostsByKey'])->name('posts.key');
+
+Route::get('dashboard', function () {
     return view('admin.landing_page');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-Route::get('/posts/{slug}', [HomeController::class, 'postDetails'])->name('post.details');
-Route::get('/categories/{slug}', [HomeController::class, 'index'])->name('categories.slug');
-Route::get('/{key}', [HomeController::class, 'getPostsByKey'])->name('posts.key');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -79,4 +82,3 @@ Route::middleware('auth')->group(function () {
     });
 
 });
-require __DIR__.'/auth.php';

@@ -8,8 +8,8 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="./index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Tags</a></li>
+                <li class="nav-item"><a class="nav-link active" aria-current="page" href={{ route('home') }}>Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('tags') }}">Tags</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Profile</a></li>
             </ul>
         </div>

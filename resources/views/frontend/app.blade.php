@@ -24,10 +24,10 @@
     {{-- Navbar --}}
     @include('frontend.navbar')
 
-    @section('categories')
+    @section('sub-main')
 
     @show
-    
+
     @section('main')
 
     @show

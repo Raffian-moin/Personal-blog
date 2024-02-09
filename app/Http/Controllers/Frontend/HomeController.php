@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Admin\Tag;
 use App\Models\Admin\Post;
 use Illuminate\Http\Request;
 use App\Models\Admin\Category;
@@ -20,59 +21,15 @@ class HomeController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Display top and recent posts
      */
-    public function create()
+    public function getPostsByKey($key)
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
-
-    public function getPostsByKey($key) {
         $data['categories'] = Category::all();
 
-        if ($key === "recent") {
-            $orderByColumn = "created_at";
-        } else if ($key === "top") {
+        $orderByColumn = "created_at";
+
+        if ($key === "top") {
             $orderByColumn = "total_views";
         }
 
@@ -81,24 +38,55 @@ class HomeController extends Controller
         return view("frontend.home.home", $data);
     }
 
+    /**
+     * Display posts of a certain category
+     */
+    public function getPostsByCategory($categorySlug)
+    {
+        $data['categories'] = Category::all();
+        $data['posts'] = Post::select('posts.*')
+            ->leftJoin('categories', 'categories.id', 'posts.category_id')
+            ->where('categories.slug', $categorySlug)
+            ->get();
+
+        return view("frontend.home.home", $data);
+    }
+
+    /**
+     * Display individual post
+     */
     public function postDetails($slug)
     {
         $data['post'] = Post::where('slug', $slug)
-                            ->with('tags')
-                            ->with('category')
-                            ->first();
+            ->with('tags')
+            ->with('category')
+            ->first();
+
+        $data['post']->body = app(\Spatie\LaravelMarkdown\MarkdownRenderer::class)->toHtml($data['post']->body);
+
         $data['related_posts'] = Post::where('category_id', $data['post']->category_id)
-                                    ->where('id', '!=', $data['post']->id)
-                                    ->get();
+            ->where('id', '!=', $data['post']->id)
+            ->take(10)
+            ->get();
         $data['recent_posts'] = Post::where('id', '!=', $data['post']->id)
-                                    ->orderBy('created_at', 'desc')
-                                    ->take(5)
-                                    ->get();
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
         $data['top_posts'] = Post::where('id', '!=', $data['post']->id)
-                                    ->orderBy('total_views', 'desc')
-                                    ->take(5)
-                                    ->get();
+            ->orderBy('total_views', 'desc')
+            ->take(5)
+            ->get();
 
         return view("frontend.post.post_details", $data);
+    }
+
+    /**
+     * Display posts of a certain category
+     */
+    public function getTags()
+    {
+        $data['tags'] = Tag::all();
+
+        return view("frontend.tags", $data);
     }
 }
