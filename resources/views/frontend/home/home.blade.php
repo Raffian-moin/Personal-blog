@@ -1,6 +1,6 @@
 @extends('frontend.app')
 
-@section('categories')
+@section('sub-main')
     <header class="container py-4 border-bottom">
         <p>Categories</p>
         @foreach($categories as $category)

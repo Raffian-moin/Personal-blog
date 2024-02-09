@@ -29,4 +29,6 @@
 - Publish toggle button in posts list
 - General settings
 - Make frontend dynamic
+- Move homepage out of /home route to root route
+- Add links to tags in post detail page
 
