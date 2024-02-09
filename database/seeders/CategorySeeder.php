@@ -46,6 +46,12 @@ class CategorySeeder extends Seeder
                 'created_by' => 1,
                 'updated_by' => 1,
             ],
+            [
+                'name'       => 'C',
+                'slug'       => 'c',
+                'created_by' => 1,
+                'updated_by' => 1,
+            ],
         ];
 
         DB::transaction(function () use ($categories) {
