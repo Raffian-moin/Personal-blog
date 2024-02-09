@@ -1,5 +1,10 @@
 @extends('frontend.app')
 
+@push('stylesheet')
+<link rel="stylesheet" href="{{ asset('admin/assets/css/easyMDECodeblockCustomization.css') }}">
+<link rel="stylesheet" href="{{ asset('admin/assets/css/postCoverImage.css') }}">
+@endpush
+
 @section('main')
     <main class="container">
         <section class="row">
@@ -9,14 +14,14 @@
                     <div class="d-flex justify-content-between pt-2 pb-4">
                         <span class="text-muted">{{ date_format($post->created_at, "j F Y")  }}</span>
 
-                        <div class="cetagory_container">
+                        <a href={{ route('categories.slug', $post->category->slug) }}>
+                            <div class="cetagory_container">
                             <span>{{ $post->category->name }}</span>
-                        </div>
+                        </div></a>
+
                     </div>
 
-                    <p class="py-4 text-justify">
-                        {{ $post->body }}
-                    </p>
+                    {!! $post->body !!}
                 </div>
 
                 @include('frontend.post.related_posts')
@@ -28,3 +33,7 @@
         </section>
     </main>
 @endsection
+
+@push('scripts')
+<script src="{{ asset('admin/js/codeblockCopyButton.js') }}"></script>
+@endpush
