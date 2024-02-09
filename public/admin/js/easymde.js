@@ -115,7 +115,7 @@ const editor = new EasyMDE({
         form_data.append("post_image", file);
         form_data.append("_token", csrfToken);
         $.ajax({
-            url: "http://personal.blog.local/" + "posts/upload-post-image",
+            url: "http://personal.blog.local/admin/" + "posts/upload-post-image",
             data: form_data,
             dataType: "json",
             type: "POST",
