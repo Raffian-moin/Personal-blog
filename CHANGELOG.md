@@ -11,7 +11,7 @@
 - Social Media share
 - Make image responsive in view (css)
 - General Settings for files
-
+- If user has permission then redirect to admin dashboard
 
 ### Later implementation
 - Roles and permission
@@ -31,4 +31,5 @@
 - Make frontend dynamic
 - Move homepage out of /home route to root route
 - Add links to tags in post detail page
-
+- Logout from admin
+- On login redirect to admin dashboard
