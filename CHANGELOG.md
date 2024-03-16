@@ -12,6 +12,7 @@
 - Make image responsive in view (css)
 - General Settings for files
 - If user has permission then redirect to admin dashboard
+- Upgrade the application to Laravel 11
 
 ### Later implementation
 - Roles and permission
@@ -33,3 +34,4 @@
 - Add links to tags in post detail page
 - Logout from admin
 - On login redirect to admin dashboard
+- prefix /admin in admin auth routes
