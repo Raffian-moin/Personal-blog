@@ -32,9 +32,7 @@ Route::get('posts/{slug}', [HomeController::class, 'postDetails'])->name('post.d
 Route::get('categories/{slug}', [HomeController::class, 'getPostsByCategory'])->name('categories.slug');
 Route::get('{key}', [HomeController::class, 'getPostsByKey'])->name('posts.key');
 
-Route::get('dashboard', function () {
-    return view('admin.landing_page');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 
 Route::middleware('auth')->group(function () {
@@ -43,6 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::prefix('admin')->group(function () {
+        Route::get('dashboard', function () {
+            return view('admin.landing_page');
+        })->middleware(['verified'])->name('dashboard');
+
         Route::prefix('tags')->group(function () {
             Route::get('/', [TagController::class, 'index'])->name('tags.index');
             Route::get('/create', [TagController::class, 'create'])->name('tags.create');
