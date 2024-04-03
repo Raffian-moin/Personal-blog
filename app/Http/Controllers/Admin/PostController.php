@@ -88,7 +88,7 @@ class PostController extends Controller
         try {
             return DB::transaction(function () use ($request, $id) {
                 $items = $request->all();
-                $items['slug'] = Str::slug($items['title'], '-') . '-' . time();
+                // $items['slug'] = Str::slug($items['title'], '-') . '-' . time();
                 $items['is_published'] = $request->has('is_published') ?? 0;
 
                 $post = Post::where('id', $id)->first();
